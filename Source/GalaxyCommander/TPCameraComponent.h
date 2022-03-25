@@ -20,11 +20,17 @@ public:
 
 	void SetupSpringArm(USpringArmComponent* SpringArm);
 	void SetupCamera(UCameraComponent* Camera);
+	void AddRotation(FRotator Rotation);
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float m_CameraSpeed;
+
 	USpringArmComponent* m_SpringArm;
 	UCameraComponent* m_Camera;
+
+	FRotator m_AccumulatedRotation;
 };

@@ -39,5 +39,17 @@ void ACommander::Tick(float DeltaTime)
 void ACommander::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PlayerInputComponent->BindAxis("RHorizontal", this, &ACommander::OnRHorizontalAxis);
+	PlayerInputComponent->BindAxis("RVertical", this, &ACommander::OnRVerticalAxis);
 }
 
+void ACommander::OnRHorizontalAxis(float axis)
+{
+	m_TPCamera->AddRotation(FRotator(0.0f, axis, 0.0f));
+}
+
+void ACommander::OnRVerticalAxis(float axis)
+{
+	m_TPCamera->AddRotation(FRotator(axis, 0.0f, 0.0f));
+}
