@@ -5,12 +5,25 @@ ACommander::ACommander()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	// Create components.
-	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
-	RootComponent = Collider;
+	// Default Components.
+	m_Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
+	RootComponent = m_Collider;
 
-	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(RootComponent);
+	m_Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	m_Mesh->SetupAttachment(RootComponent);
+
+	// TPCamera Components.
+	m_SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	m_SpringArm->SetupAttachment(RootComponent);
+
+	m_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	m_Camera->SetupAttachment(m_SpringArm);
+
+	m_TPCamera = CreateDefaultSubobject<UTPCameraComponent>(TEXT("TPCamera"));
+	m_TPCamera->SetupSpringArm(m_SpringArm);
+	m_TPCamera->SetupCamera(m_Camera);
+
+	m_TPCamera->RegisterComponent();
 }
 
 void ACommander::BeginPlay()
