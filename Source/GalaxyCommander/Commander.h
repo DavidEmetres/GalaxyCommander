@@ -22,13 +22,12 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	friend class AGalaxyPlayerController;
+
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	void OnRHorizontalAxis(float axis);
-	void OnRVerticalAxis(float axis);
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* m_Mesh;
 
