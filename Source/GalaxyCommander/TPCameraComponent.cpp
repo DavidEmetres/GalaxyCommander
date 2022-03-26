@@ -19,6 +19,9 @@ void UTPCameraComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	FRotator rotation = m_SpringArm->GetRelativeRotation();
 	rotation += m_AccumulatedRotation * m_CameraSpeed * DeltaTime;
 
+	// Clamp pitch.
+	rotation.Pitch = FMath::Clamp(rotation.Pitch, m_PitchMinMax.X, m_PitchMinMax.Y);
+
 	m_SpringArm->SetRelativeRotation(rotation);
 
 	// Reset accumulated rotation.

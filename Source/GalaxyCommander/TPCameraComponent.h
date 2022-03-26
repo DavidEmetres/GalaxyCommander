@@ -5,6 +5,7 @@
 #include "Components/ActorComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Math/UnrealMathUtility.h"
 #include "TPCameraComponent.generated.h"
 
 
@@ -28,6 +29,9 @@ protected:
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float m_CameraSpeed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FVector2D m_PitchMinMax;
 
 	USpringArmComponent* m_SpringArm;
 	UCameraComponent* m_Camera;
