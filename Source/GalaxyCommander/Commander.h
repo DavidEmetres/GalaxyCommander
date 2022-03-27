@@ -8,6 +8,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "TPCameraComponent.h"
+#include "BasicMovementComponent.h"
 #include "Commander.generated.h"
 
 UCLASS(BlueprintType)
@@ -42,4 +43,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UTPCameraComponent* m_TPCamera;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UBasicMovementComponent* m_BasicMovement;
 };

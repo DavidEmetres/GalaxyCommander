@@ -16,6 +16,8 @@ protected:
 
 	virtual void OnRHorizontalAxis(float Axis) override;
 	virtual void OnRVerticalAxis(float Axis) override;
+	virtual void OnLHorizontalAxis(float Axis) override;
+	virtual void OnLVerticalAxis(float Axis) override;
 
 private:
 	ACommander* m_Commander;

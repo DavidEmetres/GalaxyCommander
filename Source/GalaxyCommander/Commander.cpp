@@ -24,6 +24,11 @@ ACommander::ACommander()
 	m_TPCamera->SetupCamera(m_Camera);
 
 	m_TPCamera->RegisterComponent();
+
+	// BasicMovement Component.
+	m_BasicMovement = CreateDefaultSubobject<UBasicMovementComponent>(TEXT("BasicMovement"));
+
+	m_BasicMovement->RegisterComponent();
 }
 
 void ACommander::BeginPlay()

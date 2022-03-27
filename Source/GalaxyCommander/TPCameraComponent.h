@@ -19,6 +19,9 @@ public:
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	FVector GetForwardVector();
+	FVector GetRightVector();
+
 	void SetupSpringArm(USpringArmComponent* SpringArm);
 	void SetupCamera(UCameraComponent* Camera);
 	void AddRotation(FRotator Rotation);

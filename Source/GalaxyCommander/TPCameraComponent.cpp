@@ -28,6 +28,16 @@ void UTPCameraComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	m_AccumulatedRotation = FRotator::ZeroRotator;
 }
 
+FVector UTPCameraComponent::GetForwardVector()
+{
+	return m_Camera->GetForwardVector();
+}
+
+FVector UTPCameraComponent::GetRightVector()
+{
+	return m_Camera->GetRightVector();
+}
+
 void UTPCameraComponent::SetupSpringArm(USpringArmComponent* SpringArm)
 {
 	m_SpringArm = SpringArm;
