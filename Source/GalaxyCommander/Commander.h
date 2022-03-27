@@ -22,7 +22,7 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	friend class AGalaxyPlayerController;
+	friend class ACommanderPlayerController;
 
 protected:
 	virtual void BeginPlay() override;
