@@ -41,6 +41,13 @@ FVector UTPCameraComponent::GetRightVector()
 void UTPCameraComponent::SetupSpringArm(USpringArmComponent* SpringArm)
 {
 	m_SpringArm = SpringArm;
+
+	if (m_SpringArm)
+	{
+		m_SpringArm->bInheritPitch = false;
+		m_SpringArm->bInheritYaw = false;
+		m_SpringArm->bInheritRoll = false;
+	}
 }
 
 void UTPCameraComponent::SetupCamera(UCameraComponent* Camera)

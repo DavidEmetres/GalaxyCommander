@@ -18,6 +18,19 @@ void UBasicMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Tic
 
 	owner->SetActorRelativeLocation(location);
 
+	// Face movement direction.
+	if (m_FaceMovementDirection)
+	{
+		if (m_AccumulatedDirection != FVector::ZeroVector)
+		{
+			m_FacingRotation = m_AccumulatedDirection.Rotation();
+		}
+
+		FRotator rotation = FMath::Lerp(owner->GetActorRotation(), m_FacingRotation, m_FacingRotationSpeed * DeltaTime);
+
+		owner->SetActorRelativeRotation(rotation);
+	}
+
 	// Reset accumulated direction.
 	m_AccumulatedDirection = FVector::ZeroVector;
 }

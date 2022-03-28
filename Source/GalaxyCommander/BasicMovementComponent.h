@@ -21,5 +21,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float m_MovementSpeed;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	bool m_FaceMovementDirection;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float m_FacingRotationSpeed;
+
 	FVector m_AccumulatedDirection;
+	FRotator m_FacingRotation;
 };
