@@ -19,6 +19,8 @@ protected:
 	virtual void OnLHorizontalAxis(float Axis) override;
 	virtual void OnLVerticalAxis(float Axis) override;
 
+	virtual void OnLJoystickPressed() override;
+
 private:
 	ACommander* m_Commander;
 };

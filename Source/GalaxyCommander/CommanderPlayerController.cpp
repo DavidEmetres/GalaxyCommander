@@ -51,3 +51,11 @@ void ACommanderPlayerController::OnLVerticalAxis(float Axis)
 		m_Commander->m_BasicMovement->Move(projectedForward * Axis);
 	}
 }
+
+void ACommanderPlayerController::OnLJoystickPressed()
+{
+	if (m_Commander != nullptr)
+	{
+		m_Commander->m_BasicMovement->ToggleSprinting();
+	}
+}

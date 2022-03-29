@@ -10,20 +10,39 @@ void UBasicMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Tic
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// Apply accumulated direction.
 	AActor* owner = GetOwner();
 
+	// Compute velocity.
+	if (m_InputDirection != FVector::ZeroVector)
+	{
+		// Apply input direction.
+		m_InputDirection.Normalize();
+
+		m_NextVelocity += m_InputDirection * GetCurrentSpeed();
+		m_NextVelocity = m_NextVelocity.GetClampedToMaxSize2D(GetCurrentMaxVelocity());
+	}
+	else
+	{
+		// Apply ground friction.
+		m_NextVelocity *= m_GroundFriction;
+
+		m_IsSprinting = false;
+	}
+
+	m_Velocity = FMath::Lerp(m_Velocity, m_NextVelocity, m_Acceleration * DeltaTime);
+
+	// Apply velocity.
 	FVector location = owner->GetActorLocation();
-	location += m_AccumulatedDirection * m_MovementSpeed * DeltaTime;
+	location += m_Velocity * DeltaTime;
 
 	owner->SetActorRelativeLocation(location);
 
 	// Face movement direction.
 	if (m_FaceMovementDirection)
 	{
-		if (m_AccumulatedDirection != FVector::ZeroVector)
+		if (m_Velocity != FVector::ZeroVector)
 		{
-			m_FacingRotation = m_AccumulatedDirection.Rotation();
+			m_FacingRotation = m_Velocity.Rotation();
 		}
 
 		FRotator rotation = FMath::Lerp(owner->GetActorRotation(), m_FacingRotation, m_FacingRotationSpeed * DeltaTime);
@@ -31,11 +50,31 @@ void UBasicMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Tic
 		owner->SetActorRelativeRotation(rotation);
 	}
 
-	// Reset accumulated direction.
-	m_AccumulatedDirection = FVector::ZeroVector;
+	// Reset input direction.
+	m_InputDirection = FVector::ZeroVector;
 }
 
 void UBasicMovementComponent::Move(FVector Direction)
 {
-	m_AccumulatedDirection += Direction;
+	m_InputDirection += Direction;
+}
+
+FVector UBasicMovementComponent::GetVelocity()
+{
+	return m_Velocity;
+}
+
+void UBasicMovementComponent::ToggleSprinting()
+{
+	m_IsSprinting = !m_IsSprinting;
+}
+
+float UBasicMovementComponent::GetCurrentSpeed()
+{
+	return m_IsSprinting ? m_SprintSpeed : m_RunningSpeed;
+}
+
+float UBasicMovementComponent::GetCurrentMaxVelocity()
+{
+	return m_IsSprinting ? m_MaxSprintingVelocity : m_MaxRunningVelocity;
 }

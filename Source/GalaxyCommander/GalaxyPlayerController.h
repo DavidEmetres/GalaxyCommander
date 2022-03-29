@@ -18,4 +18,6 @@ protected:
 	virtual void OnRVerticalAxis(float Axis) {};
 	virtual void OnLHorizontalAxis(float Axis) {};
 	virtual void OnLVerticalAxis(float Axis) {};
+
+	virtual void OnLJoystickPressed() {};
 };

@@ -17,9 +17,27 @@ public:
 
 	void Move(FVector Direction);
 
+	void ToggleSprinting();
+
+	UFUNCTION(BlueprintCallable)
+	FVector GetVelocity();
+
 private:
+	float GetCurrentSpeed();
+	float GetCurrentMaxVelocity();
+
+	FVector m_Velocity;
+	FVector m_NextVelocity;
+	FVector m_InputDirection;
+	FRotator m_FacingRotation;
+
+	bool m_IsSprinting;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	float m_MovementSpeed;
+	float m_RunningSpeed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float m_SprintSpeed;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	bool m_FaceMovementDirection;
@@ -27,6 +45,15 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float m_FacingRotationSpeed;
 
-	FVector m_AccumulatedDirection;
-	FRotator m_FacingRotation;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float m_MaxRunningVelocity;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float m_MaxSprintingVelocity;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float m_Acceleration;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float m_GroundFriction;
 };
