@@ -12,7 +12,6 @@ class GALAXYCOMMANDER_API AGalaxyPlayerController : public APlayerController
 	
 protected:
 	virtual void BeginPlay() override;
-	virtual void OnPossess(APawn* PawnPossessed) override;
 
 	virtual void OnRHorizontalAxis(float Axis) {};
 	virtual void OnRVerticalAxis(float Axis) {};
@@ -20,4 +19,6 @@ protected:
 	virtual void OnLVerticalAxis(float Axis) {};
 
 	virtual void OnLJoystickPressed() {};
+	virtual void OnLTriggerPressed() {};
+	virtual void OnLTriggerReleased() {};
 };

@@ -5,6 +5,8 @@
 #include "Components/ActorComponent.h"
 #include "BasicMovementComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(SprintingChangedSignature, bool);
+
 UCLASS()
 class GALAXYCOMMANDER_API UBasicMovementComponent : public UActorComponent
 {
@@ -16,15 +18,18 @@ public:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	void Move(FVector Direction);
-
 	void ToggleSprinting();
 
 	UFUNCTION(BlueprintCallable)
-	FVector GetVelocity();
+	FVector GetVelocity() { return m_Velocity; }
+
+	SprintingChangedSignature OnSprintingChanged;
 
 private:
 	float GetCurrentSpeed();
 	float GetCurrentMaxVelocity();
+
+	void SetIsSprinting(bool IsSprinting);
 
 	FVector m_Velocity;
 	FVector m_NextVelocity;

@@ -10,7 +10,7 @@ UCLASS()
 class GALAXYCOMMANDER_API ACommanderPlayerController : public AGalaxyPlayerController
 {
 	GENERATED_BODY()
-	
+
 protected:
 	virtual void OnPossess(APawn* PawnPossessed) override;
 
@@ -20,7 +20,11 @@ protected:
 	virtual void OnLVerticalAxis(float Axis) override;
 
 	virtual void OnLJoystickPressed() override;
+	virtual void OnLTriggerPressed() override;
+	virtual void OnLTriggerReleased() override;
 
 private:
+	void OnSprintingChangedHandler(bool IsSprinting);
+
 	ACommander* m_Commander;
 };

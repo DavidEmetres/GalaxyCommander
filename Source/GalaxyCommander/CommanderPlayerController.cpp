@@ -9,6 +9,8 @@ void ACommanderPlayerController::OnPossess(APawn* PawnPossessed)
 	if (PawnPossessed->IsA(ACommander::StaticClass()))
 	{
 		m_Commander = Cast<ACommander>(PawnPossessed);
+
+		m_Commander->m_BasicMovement->OnSprintingChanged.AddUObject(this, &ACommanderPlayerController::OnSprintingChangedHandler);
 	}
 }
 
@@ -57,5 +59,33 @@ void ACommanderPlayerController::OnLJoystickPressed()
 	if (m_Commander != nullptr)
 	{
 		m_Commander->m_BasicMovement->ToggleSprinting();
+	}
+}
+
+void ACommanderPlayerController::OnLTriggerPressed()
+{
+	if (m_Commander != nullptr)
+	{
+		m_Commander->m_TPCamera->Deactivate();
+		m_Commander->m_BasicAiming->Activate();
+	}
+}
+
+void ACommanderPlayerController::OnLTriggerReleased()
+{
+	if (m_Commander != nullptr)
+	{
+		m_Commander->m_BasicAiming->Deactivate();
+		m_Commander->m_TPCamera->Activate();
+	}
+}
+
+void ACommanderPlayerController::OnSprintingChangedHandler(bool IsSprinting)
+{
+	if (m_Commander != nullptr)
+	{
+		// Change FOV on sprinting.
+		float fieldOfView = IsSprinting ? m_Commander->m_TPCamera->GetSprintFieldOfView() : m_Commander->m_TPCamera->GetDefaultFieldOfView();
+		m_Commander->m_TPCamera->SetFieldOfView(fieldOfView, true);
 	}
 }

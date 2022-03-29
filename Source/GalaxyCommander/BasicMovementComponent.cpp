@@ -26,7 +26,7 @@ void UBasicMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Tic
 		// Apply ground friction.
 		m_NextVelocity *= m_GroundFriction;
 
-		m_IsSprinting = false;
+		SetIsSprinting(false);
 	}
 
 	m_Velocity = FMath::Lerp(m_Velocity, m_NextVelocity, m_Acceleration * DeltaTime);
@@ -59,14 +59,9 @@ void UBasicMovementComponent::Move(FVector Direction)
 	m_InputDirection += Direction;
 }
 
-FVector UBasicMovementComponent::GetVelocity()
-{
-	return m_Velocity;
-}
-
 void UBasicMovementComponent::ToggleSprinting()
 {
-	m_IsSprinting = !m_IsSprinting;
+	SetIsSprinting(!m_IsSprinting);
 }
 
 float UBasicMovementComponent::GetCurrentSpeed()
@@ -77,4 +72,11 @@ float UBasicMovementComponent::GetCurrentSpeed()
 float UBasicMovementComponent::GetCurrentMaxVelocity()
 {
 	return m_IsSprinting ? m_MaxSprintingVelocity : m_MaxRunningVelocity;
+}
+
+void UBasicMovementComponent::SetIsSprinting(bool IsSprinting)
+{
+	m_IsSprinting = IsSprinting;
+
+	OnSprintingChanged.Broadcast(m_IsSprinting);
 }

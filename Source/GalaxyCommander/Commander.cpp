@@ -13,35 +13,30 @@ ACommander::ACommander()
 	m_Mesh->SetupAttachment(RootComponent);
 
 	// TPCamera Components.
-	m_SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	m_SpringArm->SetupAttachment(RootComponent);
+	m_FollowinSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("FollowingSpringArm"));
+	m_FollowinSpringArm->SetupAttachment(RootComponent);
 
-	m_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	m_Camera->SetupAttachment(m_SpringArm);
+	m_FollowingCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowingCamera"));
+	m_FollowingCamera->SetupAttachment(m_FollowinSpringArm);
 
 	m_TPCamera = CreateDefaultSubobject<UTPCameraComponent>(TEXT("TPCamera"));
-	m_TPCamera->SetupSpringArm(m_SpringArm);
-	m_TPCamera->SetupCamera(m_Camera);
-
+	m_TPCamera->SetupSpringArm(m_FollowinSpringArm);
+	m_TPCamera->SetupCamera(m_FollowingCamera);
 	m_TPCamera->RegisterComponent();
+
+	// BasicAiming Component.
+	m_AimingSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("AimingSpringArm"));
+	m_AimingSpringArm->SetupAttachment(RootComponent);
+
+	m_AimingCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("AimingCamera"));
+	m_AimingCamera->SetupAttachment(m_AimingSpringArm);
+
+	m_BasicAiming = CreateDefaultSubobject<UBasicAimingComponent>(TEXT("BasicAiming"));
+	m_BasicAiming->SetupSpringArm(m_AimingSpringArm);
+	m_BasicAiming->SetupCamera(m_AimingCamera);
+	m_BasicAiming->RegisterComponent();
 
 	// BasicMovement Component.
 	m_BasicMovement = CreateDefaultSubobject<UBasicMovementComponent>(TEXT("BasicMovement"));
-
 	m_BasicMovement->RegisterComponent();
-}
-
-void ACommander::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void ACommander::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
-void ACommander::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }

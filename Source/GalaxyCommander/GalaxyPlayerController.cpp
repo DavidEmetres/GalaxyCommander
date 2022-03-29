@@ -12,9 +12,6 @@ void AGalaxyPlayerController::BeginPlay()
 	InputComponent->BindAxis("LVertical", this, &AGalaxyPlayerController::OnLVerticalAxis);
 
 	InputComponent->BindAction("LJoystickButton", EInputEvent::IE_Pressed, this, &AGalaxyPlayerController::OnLJoystickPressed);
-}
-
-void AGalaxyPlayerController::OnPossess(APawn* PawnPossessed)
-{
-	Super::OnPossess(PawnPossessed);
+	InputComponent->BindAction("LTrigger", EInputEvent::IE_Pressed, this, &AGalaxyPlayerController::OnLTriggerPressed);
+	InputComponent->BindAction("LTrigger", EInputEvent::IE_Released, this, &AGalaxyPlayerController::OnLTriggerReleased);
 }

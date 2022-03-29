@@ -17,27 +17,35 @@ class GALAXYCOMMANDER_API UTPCameraComponent : public UActorComponent
 public:	
 	UTPCameraComponent();
 
+	virtual void Activate(bool bReset = false) override;
+	virtual void Deactivate() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	FVector GetForwardVector();
-	FVector GetRightVector();
+	FVector GetForwardVector() { return m_Camera->GetForwardVector(); }
+	FVector GetRightVector() { return m_Camera->GetRightVector(); }
+	float GetDefaultFieldOfView() { return m_DefaultFieldOfView; }
+	float GetSprintFieldOfView() { return m_SprintFieldOfView; }
 
 	void SetupSpringArm(USpringArmComponent* SpringArm);
 	void SetupCamera(UCameraComponent* Camera);
 	void AddRotation(FRotator Rotation);
-
-protected:
-	virtual void BeginPlay() override;
+	void SetFieldOfView(float FieldOfView, bool Lerp = false);
 
 private:
+	USpringArmComponent* m_SpringArm;
+	UCameraComponent* m_Camera;
+
+	FRotator m_AccumulatedRotation;
+
+	float m_DefaultFieldOfView;
+	float m_FieldOfView;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float m_CameraSpeed;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	FVector2D m_PitchMinMax;
 
-	USpringArmComponent* m_SpringArm;
-	UCameraComponent* m_Camera;
-
-	FRotator m_AccumulatedRotation;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float m_SprintFieldOfView;
 };

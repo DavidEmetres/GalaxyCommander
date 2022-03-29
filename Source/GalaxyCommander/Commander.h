@@ -9,6 +9,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "TPCameraComponent.h"
 #include "BasicMovementComponent.h"
+#include "BasicAimingComponent.h"
 #include "Commander.generated.h"
 
 UCLASS(BlueprintType)
@@ -19,14 +20,7 @@ class GALAXYCOMMANDER_API ACommander : public APawn
 public:
 	ACommander();
 
-	virtual void Tick(float DeltaTime) override;
-
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	friend class ACommanderPlayerController;
-
-protected:
-	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -36,13 +30,22 @@ private:
 	UCapsuleComponent* m_Collider;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	USpringArmComponent* m_SpringArm;
+	USpringArmComponent* m_FollowinSpringArm;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UCameraComponent* m_Camera;
+	UCameraComponent* m_FollowingCamera;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UTPCameraComponent* m_TPCamera;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* m_AimingSpringArm;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* m_AimingCamera;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UBasicAimingComponent* m_BasicAiming;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UBasicMovementComponent* m_BasicMovement;

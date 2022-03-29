@@ -6,9 +6,14 @@ UTPCameraComponent::UTPCameraComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UTPCameraComponent::BeginPlay()
+void UTPCameraComponent::Activate(bool bReset)
 {
-	Super::BeginPlay();
+	m_Camera->Activate();
+}
+
+void UTPCameraComponent::Deactivate()
+{
+	m_Camera->Deactivate();
 }
 
 void UTPCameraComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -26,23 +31,19 @@ void UTPCameraComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 
 	// Reset accumulated rotation.
 	m_AccumulatedRotation = FRotator::ZeroRotator;
-}
 
-FVector UTPCameraComponent::GetForwardVector()
-{
-	return m_Camera->GetForwardVector();
-}
-
-FVector UTPCameraComponent::GetRightVector()
-{
-	return m_Camera->GetRightVector();
+	// Lerp FOV.
+	if (m_Camera->FieldOfView != m_FieldOfView)
+	{
+		m_Camera->FieldOfView = FMath::Lerp(m_Camera->FieldOfView, m_FieldOfView, DeltaTime);
+	}
 }
 
 void UTPCameraComponent::SetupSpringArm(USpringArmComponent* SpringArm)
 {
 	m_SpringArm = SpringArm;
 
-	if (m_SpringArm)
+	if (m_SpringArm != nullptr)
 	{
 		m_SpringArm->bInheritPitch = false;
 		m_SpringArm->bInheritYaw = false;
@@ -53,9 +54,25 @@ void UTPCameraComponent::SetupSpringArm(USpringArmComponent* SpringArm)
 void UTPCameraComponent::SetupCamera(UCameraComponent* Camera)
 {
 	m_Camera = Camera;
+
+	if (m_Camera != nullptr)
+	{
+		m_DefaultFieldOfView = m_Camera->FieldOfView;
+		m_FieldOfView = m_DefaultFieldOfView;
+	}
 }
 
 void UTPCameraComponent::AddRotation(FRotator Rotation)
 {
 	m_AccumulatedRotation += Rotation;
+}
+
+void UTPCameraComponent::SetFieldOfView(float FieldOfView, bool Lerp)
+{
+	m_FieldOfView = FieldOfView;
+
+	if (!Lerp)
+	{
+		m_Camera->FieldOfView = m_FieldOfView;
+	}
 }
