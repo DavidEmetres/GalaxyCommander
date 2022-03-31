@@ -2,8 +2,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Kismet/GameplayStatics.h"
 #include "GalaxyPlayerController.h"
 #include "Commander.h"
+#include "GalaxyCommanderGameInstance.h"
 #include "CommanderPlayerController.generated.h"
 
 UCLASS()

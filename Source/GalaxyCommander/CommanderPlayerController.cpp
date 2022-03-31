@@ -11,6 +11,9 @@ void ACommanderPlayerController::OnPossess(APawn* PawnPossessed)
 		m_Commander = Cast<ACommander>(PawnPossessed);
 
 		m_Commander->m_BasicMovement->OnSprintingChanged.AddUObject(this, &ACommanderPlayerController::OnSprintingChangedHandler);
+
+		UGalaxyCommanderGameInstance* gameInstance = Cast<UGalaxyCommanderGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+		Weapon* rifle = gameInstance->GetWeaponRepository()->Build(FName("Rifle"));
 	}
 }
 
