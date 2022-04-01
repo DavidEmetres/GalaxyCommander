@@ -86,7 +86,10 @@ float UBasicMovementComponent::GetCurrentMaxVelocity()
 
 void UBasicMovementComponent::SetIsSprinting(bool IsSprinting)
 {
-	m_IsSprinting = IsSprinting;
+	if (m_IsSprinting != IsSprinting)
+	{
+		m_IsSprinting = IsSprinting;
 
-	OnSprintingChanged.Broadcast(m_IsSprinting);
+		OnSprintingChanged.Broadcast(m_IsSprinting);
+	}
 }

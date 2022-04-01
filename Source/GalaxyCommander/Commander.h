@@ -10,10 +10,9 @@
 #include "TPCameraComponent.h"
 #include "BasicMovementComponent.h"
 #include "WeaponComponent.h"
-#include "BasicAimingComponent.h"
 #include "Commander.generated.h"
 
-UCLASS(BlueprintType)
+UCLASS()
 class GALAXYCOMMANDER_API ACommander : public APawn
 {
 	GENERATED_BODY()

@@ -8,7 +8,7 @@
 
 DECLARE_MULTICAST_DELEGATE_OneParam(AimingChangedSignature, bool);
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS()
 class GALAXYCOMMANDER_API UWeaponComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -35,7 +35,4 @@ private:
 	Weapon* m_Weapon;
 
 	bool m_IsAiming;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	float m_AimingSpeed;
 };

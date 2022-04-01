@@ -9,7 +9,7 @@
 #include "TPCameraComponent.generated.h"
 
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS()
 class GALAXYCOMMANDER_API UTPCameraComponent : public UActorComponent
 {
 	GENERATED_BODY()

@@ -88,41 +88,35 @@ void ACommanderPlayerController::OnSprintingChangedHandler(bool IsSprinting)
 {
 	if (m_Commander != nullptr)
 	{
-		if (m_Commander->m_WeaponComponent->GetIsAiming())
+		if (IsSprinting && m_Commander->m_WeaponComponent->GetIsAiming())
 		{
-			// Change FOV on sprinting.
-			float fieldOfView = IsSprinting ? m_Commander->m_TPCameraComponent->GetSprintFieldOfView() : m_Commander->m_TPCameraComponent->GetDefaultFieldOfView();
-			m_Commander->m_TPCameraComponent->SetFieldOfView(fieldOfView, true);
+			m_Commander->m_WeaponComponent->ToggleAiming();
 		}
+
+		// Change FOV on sprinting.
+		float fieldOfView = IsSprinting ? m_Commander->m_TPCameraComponent->GetSprintFieldOfView() : m_Commander->m_TPCameraComponent->GetDefaultFieldOfView();
+		m_Commander->m_TPCameraComponent->SetFieldOfView(fieldOfView, true);
 	}
 }
 
 void ACommanderPlayerController::OnAimingChangedHandler(bool IsAiming)
 {
-	if (m_Commander != nullptr)
+	if (m_Commander != nullptr && m_Commander->m_WeaponComponent->GetIsWeaponEquipped())
 	{
-		if (IsAiming)
+		if (IsAiming && m_Commander->m_BasicMovementComponent->GetIsSprinting())
 		{
-			if (m_Commander->m_BasicMovementComponent->GetIsSprinting())
-			{
-				m_Commander->m_BasicMovementComponent->ToggleSprinting();
-			}
-
-			Weapon* weapon = m_Commander->m_WeaponComponent->GetWeapon();
-
-			m_Commander->m_TPCameraComponent->SetFieldOfView(weapon->GetAimingFieldOfView(), true);
-			m_Commander->m_TPCameraComponent->SetCameraLocation(weapon->GetCameraLocation(), true);
-
-			m_Commander->m_BasicMovementComponent->SetFaceMovementDirection(false);
-			m_Commander->m_TPCameraComponent->SetFaceCameraDirection(true);
+			m_Commander->m_BasicMovementComponent->ToggleSprinting();
 		}
-		else
-		{
-			m_Commander->m_TPCameraComponent->SetFieldOfView(m_Commander->m_TPCameraComponent->GetDefaultFieldOfView(), true);
-			m_Commander->m_TPCameraComponent->SetCameraLocation(m_Commander->m_TPCameraComponent->GetDefaultCameraLocation(), true);
 
-			m_Commander->m_TPCameraComponent->SetFaceCameraDirection(false);
-			m_Commander->m_BasicMovementComponent->SetFaceMovementDirection(true);
-		}
+		Weapon* weapon = m_Commander->m_WeaponComponent->GetWeapon();
+
+		float fieldOfView = IsAiming ? weapon->GetAimingFieldOfView() : m_Commander->m_TPCameraComponent->GetDefaultFieldOfView();
+		FVector cameraLocation = IsAiming ? weapon->GetCameraLocation() : m_Commander->m_TPCameraComponent->GetDefaultCameraLocation();
+
+		m_Commander->m_TPCameraComponent->SetFieldOfView(fieldOfView, true);
+		m_Commander->m_TPCameraComponent->SetCameraLocation(cameraLocation, true);
+
+		m_Commander->m_TPCameraComponent->SetFaceCameraDirection(IsAiming);
+		m_Commander->m_BasicMovementComponent->SetFaceMovementDirection(!IsAiming);
 	}
 }
