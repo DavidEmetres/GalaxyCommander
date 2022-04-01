@@ -17,6 +17,9 @@ public:
 		float SecondsBetweenShots);
 	~Weapon();
 
+	FVector GetCameraLocation() { return m_CameraLocation; }
+	float GetAimingFieldOfView() { return m_AimingFOV; }
+
 	virtual Weapon* Clone() override;
 
 private:

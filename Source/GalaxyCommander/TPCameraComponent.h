@@ -17,19 +17,22 @@ class GALAXYCOMMANDER_API UTPCameraComponent : public UActorComponent
 public:	
 	UTPCameraComponent();
 
-	virtual void Activate(bool bReset = false) override;
-	virtual void Deactivate() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	FVector GetForwardVector() { return m_Camera->GetForwardVector(); }
 	FVector GetRightVector() { return m_Camera->GetRightVector(); }
+	FVector GetDefaultCameraLocation() { return m_DefaultLocation; }
 	float GetDefaultFieldOfView() { return m_DefaultFieldOfView; }
 	float GetSprintFieldOfView() { return m_SprintFieldOfView; }
+
+	void SetCameraLocation(FVector Location, bool Lerp = false);
+	void SetFieldOfView(float FieldOfView, bool Lerp = false);
+	void SetFaceCameraDirection(bool Facing);
 
 	void SetupSpringArm(USpringArmComponent* SpringArm);
 	void SetupCamera(UCameraComponent* Camera);
 	void AddRotation(FRotator Rotation);
-	void SetFieldOfView(float FieldOfView, bool Lerp = false);
+
 
 private:
 	USpringArmComponent* m_SpringArm;
@@ -37,8 +40,18 @@ private:
 
 	FRotator m_AccumulatedRotation;
 
+	FVector m_DefaultLocation;
+	FVector m_Location;
 	float m_DefaultFieldOfView;
 	float m_FieldOfView;
+
+	FRotator m_FacingRotation;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	bool m_FaceCameraDirection;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float m_FacingRotationSpeed;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float m_CameraSpeed;

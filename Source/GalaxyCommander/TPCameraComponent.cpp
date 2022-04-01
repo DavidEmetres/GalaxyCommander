@@ -6,19 +6,16 @@ UTPCameraComponent::UTPCameraComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UTPCameraComponent::Activate(bool bReset)
-{
-	m_Camera->Activate();
-}
-
-void UTPCameraComponent::Deactivate()
-{
-	m_Camera->Deactivate();
-}
-
 void UTPCameraComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// Lerp location.
+	if (m_Camera->GetRelativeLocation() != m_Location)
+	{
+		FVector newLocation = FMath::Lerp(m_Camera->GetRelativeLocation(), m_Location, DeltaTime);
+		m_Camera->SetRelativeLocation(newLocation);
+	}
 
 	// Apply accumulated rotation.
 	FRotator rotation = m_SpringArm->GetRelativeRotation();
@@ -36,6 +33,24 @@ void UTPCameraComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	if (m_Camera->FieldOfView != m_FieldOfView)
 	{
 		m_Camera->FieldOfView = FMath::Lerp(m_Camera->FieldOfView, m_FieldOfView, DeltaTime);
+	}
+
+	// Face camera direction.
+	if (m_FaceCameraDirection)
+	{
+		AActor* owner = GetOwner();
+
+		FVector cameraForward = GetForwardVector();
+		FVector ownerForward = owner->GetActorForwardVector();
+
+		if (cameraForward != ownerForward)
+		{
+			m_FacingRotation = cameraForward.Rotation();
+		}
+
+		FRotator rot = FMath::Lerp(owner->GetActorRotation(), m_FacingRotation, m_FacingRotationSpeed * DeltaTime);
+
+		owner->SetActorRelativeRotation(rot);
 	}
 }
 
@@ -57,6 +72,9 @@ void UTPCameraComponent::SetupCamera(UCameraComponent* Camera)
 
 	if (m_Camera != nullptr)
 	{
+		// Setup default values.
+		m_DefaultLocation = m_Camera->GetRelativeLocation();
+		m_Location = m_DefaultLocation;
 		m_DefaultFieldOfView = m_Camera->FieldOfView;
 		m_FieldOfView = m_DefaultFieldOfView;
 	}
@@ -67,6 +85,16 @@ void UTPCameraComponent::AddRotation(FRotator Rotation)
 	m_AccumulatedRotation += Rotation;
 }
 
+void UTPCameraComponent::SetCameraLocation(FVector Location, bool Lerp)
+{
+	m_Location = Location;
+
+	if (!Lerp)
+	{
+		m_Camera->SetRelativeLocation(Location);
+	}
+}
+
 void UTPCameraComponent::SetFieldOfView(float FieldOfView, bool Lerp)
 {
 	m_FieldOfView = FieldOfView;
@@ -75,4 +103,14 @@ void UTPCameraComponent::SetFieldOfView(float FieldOfView, bool Lerp)
 	{
 		m_Camera->FieldOfView = m_FieldOfView;
 	}
+}
+
+void UTPCameraComponent::SetFaceCameraDirection(bool Facing)
+{
+	if (Facing && Facing != m_FaceCameraDirection)
+	{
+		m_FacingRotation = GetOwner()->GetActorRotation();
+	}
+
+	m_FaceCameraDirection = Facing;
 }

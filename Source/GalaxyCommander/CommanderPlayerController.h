@@ -27,6 +27,7 @@ protected:
 
 private:
 	void OnSprintingChangedHandler(bool IsSprinting);
+	void OnAimingChangedHandler(bool IsAiming);
 
 	ACommander* m_Commander;
 };

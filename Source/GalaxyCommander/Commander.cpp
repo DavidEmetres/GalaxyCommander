@@ -19,24 +19,16 @@ ACommander::ACommander()
 	m_FollowingCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowingCamera"));
 	m_FollowingCamera->SetupAttachment(m_FollowinSpringArm);
 
-	m_TPCamera = CreateDefaultSubobject<UTPCameraComponent>(TEXT("TPCamera"));
-	m_TPCamera->SetupSpringArm(m_FollowinSpringArm);
-	m_TPCamera->SetupCamera(m_FollowingCamera);
-	m_TPCamera->RegisterComponent();
+	m_TPCameraComponent = CreateDefaultSubobject<UTPCameraComponent>(TEXT("TPCameraComponent"));
+	m_TPCameraComponent->SetupSpringArm(m_FollowinSpringArm);
+	m_TPCameraComponent->SetupCamera(m_FollowingCamera);
+	m_TPCameraComponent->RegisterComponent();
 
-	// BasicAiming Component.
-	m_AimingSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("AimingSpringArm"));
-	m_AimingSpringArm->SetupAttachment(RootComponent);
-
-	m_AimingCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("AimingCamera"));
-	m_AimingCamera->SetupAttachment(m_AimingSpringArm);
-
-	m_BasicAiming = CreateDefaultSubobject<UBasicAimingComponent>(TEXT("BasicAiming"));
-	m_BasicAiming->SetupSpringArm(m_AimingSpringArm);
-	m_BasicAiming->SetupCamera(m_AimingCamera);
-	m_BasicAiming->RegisterComponent();
+	// Weapon Component.
+	m_WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("WeaponComponent"));
+	m_WeaponComponent->RegisterComponent();
 
 	// BasicMovement Component.
-	m_BasicMovement = CreateDefaultSubobject<UBasicMovementComponent>(TEXT("BasicMovement"));
-	m_BasicMovement->RegisterComponent();
+	m_BasicMovementComponent = CreateDefaultSubobject<UBasicMovementComponent>(TEXT("BasicMovementComponent"));
+	m_BasicMovementComponent->RegisterComponent();
 }

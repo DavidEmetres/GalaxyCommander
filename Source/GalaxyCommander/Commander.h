@@ -9,6 +9,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "TPCameraComponent.h"
 #include "BasicMovementComponent.h"
+#include "WeaponComponent.h"
 #include "BasicAimingComponent.h"
 #include "Commander.generated.h"
 
@@ -36,7 +37,7 @@ private:
 	UCameraComponent* m_FollowingCamera;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UTPCameraComponent* m_TPCamera;
+	UTPCameraComponent* m_TPCameraComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* m_AimingSpringArm;
@@ -45,8 +46,8 @@ private:
 	UCameraComponent* m_AimingCamera;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UBasicAimingComponent* m_BasicAiming;
+	UWeaponComponent* m_WeaponComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UBasicMovementComponent* m_BasicMovement;
+	UBasicMovementComponent* m_BasicMovementComponent;
 };

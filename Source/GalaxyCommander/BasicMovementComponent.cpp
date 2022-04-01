@@ -40,9 +40,9 @@ void UBasicMovementComponent::TickComponent(float DeltaTime, enum ELevelTick Tic
 	// Face movement direction.
 	if (m_FaceMovementDirection)
 	{
-		if (m_Velocity != FVector::ZeroVector)
+		if (!m_InputDirection.IsZero())
 		{
-			m_FacingRotation = m_Velocity.Rotation();
+			m_FacingRotation = m_InputDirection.Rotation();
 		}
 
 		FRotator rotation = FMath::Lerp(owner->GetActorRotation(), m_FacingRotation, m_FacingRotationSpeed * DeltaTime);
@@ -62,6 +62,16 @@ void UBasicMovementComponent::Move(FVector Direction)
 void UBasicMovementComponent::ToggleSprinting()
 {
 	SetIsSprinting(!m_IsSprinting);
+}
+
+void UBasicMovementComponent::SetFaceMovementDirection(bool Facing)
+{
+	if (Facing && Facing != m_FaceMovementDirection)
+	{
+		m_FacingRotation = GetOwner()->GetActorRotation();
+	}
+
+	m_FaceMovementDirection = Facing;
 }
 
 float UBasicMovementComponent::GetCurrentSpeed()

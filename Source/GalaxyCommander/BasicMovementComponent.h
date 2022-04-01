@@ -20,10 +20,14 @@ public:
 	void Move(FVector Direction);
 	void ToggleSprinting();
 
-	UFUNCTION(BlueprintCallable)
-	FVector GetVelocity() { return m_Velocity; }
+	bool GetIsSprinting() { return m_IsSprinting; }
+
+	void SetFaceMovementDirection(bool Facing);
 
 	SprintingChangedSignature OnSprintingChanged;
+
+	UFUNCTION(BlueprintCallable)
+	FVector GetVelocity() { return m_Velocity; }
 
 private:
 	float GetCurrentSpeed();
