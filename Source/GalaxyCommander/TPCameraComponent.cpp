@@ -6,6 +6,26 @@ UTPCameraComponent::UTPCameraComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+void UTPCameraComponent::BeginPlay()
+{
+	// Set defaults.
+	if (m_SpringArm != nullptr)
+	{
+		m_SpringArm->bInheritPitch = false;
+		m_SpringArm->bInheritYaw = false;
+		m_SpringArm->bInheritRoll = false;
+	}
+
+	if (m_Camera != nullptr)
+	{
+		m_DefaultLocation = m_Camera->GetRelativeLocation();
+		m_Location = m_DefaultLocation;
+		m_DefaultFieldOfView = m_Camera->FieldOfView;
+		m_FieldOfView = m_DefaultFieldOfView;
+		m_PitchMinMax = m_DefaultPitchMinMax;
+	}
+}
+
 void UTPCameraComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -57,27 +77,11 @@ void UTPCameraComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 void UTPCameraComponent::SetupSpringArm(USpringArmComponent* SpringArm)
 {
 	m_SpringArm = SpringArm;
-
-	if (m_SpringArm != nullptr)
-	{
-		m_SpringArm->bInheritPitch = false;
-		m_SpringArm->bInheritYaw = false;
-		m_SpringArm->bInheritRoll = false;
-	}
 }
 
 void UTPCameraComponent::SetupCamera(UCameraComponent* Camera)
 {
 	m_Camera = Camera;
-
-	if (m_Camera != nullptr)
-	{
-		// Setup default values.
-		m_DefaultLocation = m_Camera->GetRelativeLocation();
-		m_Location = m_DefaultLocation;
-		m_DefaultFieldOfView = m_Camera->FieldOfView;
-		m_FieldOfView = m_DefaultFieldOfView;
-	}
 }
 
 void UTPCameraComponent::AddRotation(FRotator Rotation)

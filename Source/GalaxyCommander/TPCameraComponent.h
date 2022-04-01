@@ -24,15 +24,19 @@ public:
 	FVector GetDefaultCameraLocation() { return m_DefaultLocation; }
 	float GetDefaultFieldOfView() { return m_DefaultFieldOfView; }
 	float GetSprintFieldOfView() { return m_SprintFieldOfView; }
+	FVector2D GetDefaultPitchMinMax() { return m_PitchMinMax; }
 
 	void SetCameraLocation(FVector Location, bool Lerp = false);
 	void SetFieldOfView(float FieldOfView, bool Lerp = false);
 	void SetFaceCameraDirection(bool Facing);
+	void SetPitchMinMax(FVector2D PitchMinMax) { m_PitchMinMax = PitchMinMax; }
 
 	void SetupSpringArm(USpringArmComponent* SpringArm);
 	void SetupCamera(UCameraComponent* Camera);
 	void AddRotation(FRotator Rotation);
 
+protected:
+	virtual void BeginPlay() override;
 
 private:
 	USpringArmComponent* m_SpringArm;
@@ -44,6 +48,7 @@ private:
 	FVector m_Location;
 	float m_DefaultFieldOfView;
 	float m_FieldOfView;
+	FVector2D m_PitchMinMax;
 
 	FRotator m_FacingRotation;
 
@@ -57,7 +62,7 @@ private:
 	float m_CameraSpeed;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	FVector2D m_PitchMinMax;
+	FVector2D m_DefaultPitchMinMax;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	float m_SprintFieldOfView;

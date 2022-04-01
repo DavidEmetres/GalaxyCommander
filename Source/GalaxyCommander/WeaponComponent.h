@@ -16,11 +16,10 @@ class GALAXYCOMMANDER_API UWeaponComponent : public UActorComponent
 public:	
 	UWeaponComponent();
 
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	bool GetIsWeaponEquipped() { return m_Weapon != nullptr; }
 	Weapon* GetWeapon() { return m_Weapon; }
 	bool GetIsAiming() { return m_IsAiming; }
+	FVector2D GetPitchMinMax() { return m_PitchMinMax; }
 
 	void SetWeapon(Weapon* Weapon) { m_Weapon = Weapon; }
 
@@ -28,11 +27,11 @@ public:
 
 	AimingChangedSignature OnAimingChanged;
 
-protected:
-	virtual void BeginPlay() override;
-
 private:
 	Weapon* m_Weapon;
 
 	bool m_IsAiming;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FVector2D m_PitchMinMax;
 };

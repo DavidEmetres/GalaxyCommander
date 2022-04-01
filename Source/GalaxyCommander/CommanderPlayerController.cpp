@@ -112,9 +112,11 @@ void ACommanderPlayerController::OnAimingChangedHandler(bool IsAiming)
 
 		float fieldOfView = IsAiming ? weapon->GetAimingFieldOfView() : m_Commander->m_TPCameraComponent->GetDefaultFieldOfView();
 		FVector cameraLocation = IsAiming ? weapon->GetCameraLocation() : m_Commander->m_TPCameraComponent->GetDefaultCameraLocation();
+		FVector2D pitchMinMax = IsAiming ? m_Commander->m_WeaponComponent->GetPitchMinMax() : m_Commander->m_TPCameraComponent->GetDefaultPitchMinMax();
 
 		m_Commander->m_TPCameraComponent->SetFieldOfView(fieldOfView, true);
 		m_Commander->m_TPCameraComponent->SetCameraLocation(cameraLocation, true);
+		m_Commander->m_TPCameraComponent->SetPitchMinMax(pitchMinMax);
 
 		m_Commander->m_TPCameraComponent->SetFaceCameraDirection(IsAiming);
 		m_Commander->m_BasicMovementComponent->SetFaceMovementDirection(!IsAiming);
