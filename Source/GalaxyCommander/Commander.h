@@ -22,6 +22,12 @@ public:
 
 	friend class ACommanderPlayerController;
 
+	UFUNCTION(BlueprintCallable)
+	UWeaponComponent* GetWeaponComponent() { return m_WeaponComponent; }
+
+	UFUNCTION(BlueprintCallable)
+	UBasicMovementComponent* GetBasicMovementComponent() { return m_BasicMovementComponent; }
+
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* m_Mesh;

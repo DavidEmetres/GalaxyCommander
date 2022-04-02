@@ -18,7 +18,6 @@ public:
 
 	bool GetIsWeaponEquipped() { return m_Weapon != nullptr; }
 	Weapon* GetWeapon() { return m_Weapon; }
-	bool GetIsAiming() { return m_IsAiming; }
 	FVector2D GetPitchMinMax() { return m_PitchMinMax; }
 
 	void SetWeapon(Weapon* Weapon) { m_Weapon = Weapon; }
@@ -26,6 +25,9 @@ public:
 	void ToggleAiming();
 
 	AimingChangedSignature OnAimingChanged;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsAiming() { return m_IsAiming; }
 
 private:
 	Weapon* m_Weapon;
