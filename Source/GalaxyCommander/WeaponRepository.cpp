@@ -24,7 +24,7 @@ Prototype<Weapon>* WeaponRepository::BuildPrototype(FWeaponStruct Data)
 		Data.AmmoPerMagazine,
 		Data.AimingFOV,
 		Data.CameraLocation,
-		Data.SightTexture,
+		Data.SightUIWidget,
 		Data.RecoilForce,
 		Data.SecondsBetweenShots
 	);

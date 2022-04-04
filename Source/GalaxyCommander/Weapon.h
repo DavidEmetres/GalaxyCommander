@@ -12,7 +12,7 @@ public:
 		int AmmoPerMagazine, 
 		float AimingFOV, 
 		FVector CameraLocation, 
-		UTexture2D* SightTexture, 
+		TSoftClassPtr<UUserWidget> SightUIWidget,
 		FVector RecoilForce, 
 		float SecondsBetweenShots);
 	~Weapon();
@@ -22,12 +22,14 @@ public:
 
 	virtual Weapon* Clone() override;
 
+	friend class UWeaponFacade;
+
 private:
 	int m_Magazine;
 	int m_AmmoPerMagazine;
 	float m_AimingFOV;
 	FVector m_CameraLocation;
-	UTexture2D* m_SightTexture;
+	TSoftClassPtr<UUserWidget> m_SightUIWidget;
 	FVector m_RecoilForce;
 	float m_SecondsBetweenShots;
 };

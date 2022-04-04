@@ -6,7 +6,7 @@ Weapon::Weapon(
 	int AmmoPerMagazine, 
 	float AimingFOV, 
 	FVector CameraLocation, 
-	UTexture2D* SightTexture, 
+	TSoftClassPtr<UUserWidget> SightUIWidget,
 	FVector RecoilForce, 
 	float SecondsBetweenShots)
 {
@@ -14,7 +14,7 @@ Weapon::Weapon(
 	m_AmmoPerMagazine = AmmoPerMagazine;
 	m_AimingFOV = AimingFOV;
 	m_CameraLocation = CameraLocation;
-	m_SightTexture = SightTexture;
+	m_SightUIWidget = SightUIWidget;
 	m_RecoilForce = RecoilForce;
 	m_SecondsBetweenShots = SecondsBetweenShots;
 }
@@ -30,7 +30,7 @@ Weapon* Weapon::Clone()
 		m_AmmoPerMagazine,
 		m_AimingFOV,
 		m_CameraLocation,
-		m_SightTexture,
+		m_SightUIWidget,
 		m_RecoilForce,
 		m_SecondsBetweenShots
 	);

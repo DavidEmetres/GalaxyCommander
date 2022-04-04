@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
+#include "Blueprint/UserWidget.h"
 #include "WeaponStruct.generated.h"
 
 USTRUCT(BlueprintType)
@@ -23,7 +24,7 @@ struct GALAXYCOMMANDER_API FWeaponStruct : public FTableRowBase
 	FVector CameraLocation;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	UTexture2D* SightTexture;
+	TSoftClassPtr<UUserWidget> SightUIWidget;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	FVector RecoilForce;
