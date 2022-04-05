@@ -13,6 +13,12 @@ void ACommanderPlayerController::OnPossess(APawn* PawnPossessed)
 		m_Commander->m_WeaponComponent->OnAimingChanged.AddUObject(this, &ACommanderPlayerController::OnAimingChangedHandler);
 		m_Commander->m_BasicMovementComponent->OnSprintingChanged.AddUObject(this, &ACommanderPlayerController::OnSprintingChangedHandler);
 
+		m_Commander->m_WeaponMesh->AttachToComponent(
+			m_Commander->m_Mesh, 
+			FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), 
+			m_Commander->m_WeaponComponent->GetWeaponParentSocketName());
+
+		// Test weapon set.
 		UGalaxyCommanderGameInstance* gameInstance = Cast<UGalaxyCommanderGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 		Weapon* rifle = gameInstance->GetWeaponRepository()->Build(FName("Rifle"));
 
@@ -82,6 +88,19 @@ void ACommanderPlayerController::OnLTriggerReleased()
 	{
 		m_Commander->m_WeaponComponent->ToggleAiming();
 	}
+}
+
+void ACommanderPlayerController::OnRTriggerPressed()
+{
+	if (m_Commander != nullptr && m_Commander->m_WeaponComponent->GetIsAiming())
+	{
+		m_Commander->m_WeaponComponent->Shoot();
+	}
+}
+
+void ACommanderPlayerController::OnRTriggerReleased()
+{
+
 }
 
 void ACommanderPlayerController::OnSprintingChangedHandler(bool IsSprinting)

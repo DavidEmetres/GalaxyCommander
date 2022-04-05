@@ -14,4 +14,6 @@ void AGalaxyPlayerController::BeginPlay()
 	InputComponent->BindAction("LJoystickButton", EInputEvent::IE_Pressed, this, &AGalaxyPlayerController::OnLJoystickPressed);
 	InputComponent->BindAction("LTrigger", EInputEvent::IE_Pressed, this, &AGalaxyPlayerController::OnLTriggerPressed);
 	InputComponent->BindAction("LTrigger", EInputEvent::IE_Released, this, &AGalaxyPlayerController::OnLTriggerReleased);
+	InputComponent->BindAction("RTrigger", EInputEvent::IE_Pressed, this, &AGalaxyPlayerController::OnRTriggerPressed);
+	InputComponent->BindAction("RTrigger", EInputEvent::IE_Released, this, &AGalaxyPlayerController::OnRTriggerReleased);
 }

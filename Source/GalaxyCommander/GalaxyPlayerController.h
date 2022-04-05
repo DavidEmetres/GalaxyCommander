@@ -21,4 +21,6 @@ protected:
 	virtual void OnLJoystickPressed() {};
 	virtual void OnLTriggerPressed() {};
 	virtual void OnLTriggerReleased() {};
+	virtual void OnRTriggerPressed() {};
+	virtual void OnRTriggerReleased() {};
 };

@@ -24,6 +24,8 @@ protected:
 	virtual void OnLJoystickPressed() override;
 	virtual void OnLTriggerPressed() override;
 	virtual void OnLTriggerReleased() override;
+	virtual void OnRTriggerPressed() override;
+	virtual void OnRTriggerReleased() override;
 
 private:
 	void OnSprintingChangedHandler(bool IsSprinting);

@@ -24,8 +24,13 @@ Prototype<Weapon>* WeaponRepository::BuildPrototype(FWeaponStruct Data)
 		Data.AmmoPerMagazine,
 		Data.AimingFOV,
 		Data.CameraLocation,
-		Data.SightUIWidget,
 		Data.RecoilForce,
-		Data.SecondsBetweenShots
+		Data.SecondsBetweenShots,
+		Data.RangeMeters,
+		Data.WeaponMesh,
+		Data.WeaponTransform,
+		Data.Bullet,
+		Data.BulletOriginSocket,
+		Data.SightUIWidget
 	);
 }

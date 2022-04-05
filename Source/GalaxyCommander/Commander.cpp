@@ -25,7 +25,11 @@ ACommander::ACommander()
 	m_TPCameraComponent->RegisterComponent();
 
 	// Weapon Component.
+	m_WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
+	m_WeaponMesh->SetupAttachment(m_Mesh);
+
 	m_WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("WeaponComponent"));
+	m_WeaponComponent->SetupMesh(m_WeaponMesh);
 	m_WeaponComponent->RegisterComponent();
 
 	// BasicMovement Component.
