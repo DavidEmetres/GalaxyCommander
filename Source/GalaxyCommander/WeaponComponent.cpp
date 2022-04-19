@@ -29,14 +29,25 @@ void UWeaponComponent::Shoot()
 {
 	if (m_Weapon != nullptr)
 	{
+		// Calculate origin and destination.
+		FVector startPoint = m_Mesh->GetSocketLocation(m_Weapon->GetBulletOriginSocket());
+		FVector endPoint = m_Camera->GetComponentLocation() + (m_Camera->GetForwardVector() * m_Weapon->GetRangeMeters());
+
+		// Spawn bullet.
 		UClass* bulletClass = m_Weapon->GetBulletClass().Get();
 
-		AActor* owner = GetOwner();
+		if (bulletClass != nullptr)
+		{
+			ABullet* bullet = GetWorld()->SpawnActor<ABullet>(bulletClass);
+			bullet->SetActorLocation(startPoint);
+			bullet->SetActorRotation((endPoint - startPoint).Rotation());
 
-		ABullet* bullet = GetWorld()->SpawnActor<ABullet>(
-			bulletClass,
-			owner->GetActorLocation(),
-			owner->GetActorForwardVector().Rotation());
+			bullet->SetEndPoint(endPoint);
+
+			FCollisionQueryParams collisionParams = FCollisionQueryParams();
+			collisionParams.AddIgnoredActor(GetOwner());
+			bullet->Shoot(collisionParams);
+		}
 	}
 }
 

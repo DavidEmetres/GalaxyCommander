@@ -2,10 +2,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/SkeletalMeshSocket.h"
+#include "Engine/StaticMeshSocket.h"
 #include "Weapon.h"
 #include "WeaponFacade.h"
 #include "Components/ActorComponent.h"
+#include "Camera/CameraComponent.h"
 #include "WeaponComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(AimingChangedSignature, bool);
@@ -26,6 +27,7 @@ public:
 	FName GetWeaponParentSocketName() { return m_WeaponParentSocketName; }
 	FVector2D GetPitchMinMax() { return m_PitchMinMax; }
 
+	void SetupCamera(UCameraComponent* Camera) { m_Camera = Camera; }
 	void SetupMesh(UStaticMeshComponent* Mesh) { m_Mesh = Mesh; }
 	void SetWeapon(Weapon* Weapon);
 
@@ -45,6 +47,7 @@ private:
 	bool m_IsAiming;
 
 	UStaticMeshComponent* m_Mesh;
+	UCameraComponent* m_Camera;
 
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	UWeaponFacade* GetWeaponFacade();

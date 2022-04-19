@@ -14,8 +14,8 @@ void ACommanderPlayerController::OnPossess(APawn* PawnPossessed)
 		m_Commander->m_BasicMovementComponent->OnSprintingChanged.AddUObject(this, &ACommanderPlayerController::OnSprintingChangedHandler);
 
 		m_Commander->m_WeaponMesh->AttachToComponent(
-			m_Commander->m_Mesh, 
-			FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), 
+			m_Commander->m_Mesh,
+			FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true),
 			m_Commander->m_WeaponComponent->GetWeaponParentSocketName());
 
 		// Test weapon set.

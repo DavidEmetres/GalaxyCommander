@@ -30,6 +30,7 @@ ACommander::ACommander()
 
 	m_WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("WeaponComponent"));
 	m_WeaponComponent->SetupMesh(m_WeaponMesh);
+	m_WeaponComponent->SetupCamera(m_FollowingCamera);
 	m_WeaponComponent->RegisterComponent();
 
 	// BasicMovement Component.
